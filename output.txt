@@ -1,0 +1,18 @@
+Problem
+status=Optimal
+Kimbap = 0.0
+Ribeye = 0.0
+Sausage = 0.0
+Tofu = 15.12605
+Yogurt = 22.222222
+Objective = 27.97385576
+
+Revised Problem
+status=Optimal
+Kimbap = 1.0
+Ribeye = 1.0
+Sausage = 1.0
+Tofu = 13.02521
+Yogurt = 22.222222
+Objective = 36.270326559999994
+

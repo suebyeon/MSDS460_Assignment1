@@ -1,0 +1,44 @@
+import pulp
+from pulp import LpVariable, LpProblem, LpMaximize, LpStatus, value, LpMinimize
+# Problem (Initial)
+# define variables
+x1 = LpVariable("Ribeye", 0, None) # MFR>=0
+x2 = LpVariable("Sausage", 0, None) # EOC>=0
+x3 = LpVariable("Kimbap", 0, None) # ER>=0
+x4 = LpVariable("Yogurt", 0, None) # SC>=0
+x5 = LpVariable("Tofu", 0, None) # WM>=0
+
+
+# x1 = LpVariable("Ribeye", 1, None) # MFR>=0
+# x2 = LpVariable("Sausage", 1, None) # EOC>=0
+# x3 = LpVariable("Kimbap", 1, None) # ER>=0
+# x4 = LpVariable("Yogurt", 1, None) # SC>=0
+# x5 = LpVariable("Tofu", 1, None) # WM>=0
+
+# defines the problem
+prob = LpProblem("problem", LpMinimize)
+
+# define constraints
+prob += 7*(60*x1 + 660*x2 + 320*x3 + 65*x4 + 5*x5) <= 7*5000 # sodium constraint
+prob += 7*(390*x1 + 170*x2 + 140*x3 + 150*x4 + 80*x5) >= 7*2000 # energy constraint
+prob += 7*(18*x1 + 13*x2 + 4*x3 + 16*x4 + 10*x5) >= 7*50 # protein constraint
+prob += 7*(0*x1 + 0*x2 + 0*x3 + 0.9*x4 + 0*x5) >= 7*20 # vitamin D constraint
+prob += 7*(30*x1 + 0*x2 + 50*x3 + 170*x4 + 150*x5) >= 7*1300 # calcium constraint
+prob += 7*(2*x1 + 0*x2 + 0.5*x3 + 0*x4 + 1.19*x5) >= 7*18 # iron constraint
+prob += 7*(260*x1 + 0*x2 + 70*x3 + 200*x4 + 140*x5) >= 7*4700 # potassium constraint
+
+# define objective function
+prob += 6.84*x1 + 1.12*x2 + 1.66*x3 + 0.83*x4 + 0.63*x5
+
+f = open("output.txt", "a")
+# solve the problem
+status = prob.solve()
+print(f"Problem", file=f)
+print(f"status={LpStatus[status]}", file=f)
+# print the results
+for variable in prob.variables():
+    print(f"{variable.name} = {variable.varValue}", file=f)
+print(f"Objective = {value(prob.objective)}", file=f)
+print(f"", file=f)
+f.close()
+
